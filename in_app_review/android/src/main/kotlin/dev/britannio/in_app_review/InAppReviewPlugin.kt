@@ -104,6 +104,7 @@ class InAppReviewPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val manager = ReviewManagerFactory.create(currentContext)
             val request = manager.requestReviewFlow()
             request.addOnCompleteListener { task ->
+                if (noContextOrActivity(result)) return@addOnCompleteListener
                 if (task.isSuccessful) {
                     Log.i(TAG, "onComplete: Successfully requested review flow")
                     val info = task.result
